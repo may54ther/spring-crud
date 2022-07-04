@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.ahakim.crud.mapper.User">
+    <resultMap id="UserMap" type="io.ahakim.crud.domain.MemberVO">
+        <id property="id" column="id"/>
+        <result property="id" column="id"/>
+        <result property="pw" column="pw"/>
+        <result property="name" column="name"/>
+        <result property="nickname" column="nickname"/>
+        <result property="createdAt" column="createdAt"/>
+        <result property="deletedAt" column="deletedAt"/>
+        <!--<collection property="authList" resultMap="authMap"></collection>-->
+    </resultMap>
+
+    <!-- 회원가입 -->
+    <insert id="join" parameterType="User">
+        INSERT INTO user (id, pw, name, nickname, gender, birth, email, createdAt)
+        VALUES (#{id}, #{pw}, #{name}, #{nickname}, #{gender}, #{birth},
+                #{email}, CURRENT_TIMESTAMP)
+    </insert>
+    <!-- 중복 체크 -->
+    <select id="checkId" parameterType="String" resultType="Integer">
+        SELECT COUNT(*)
+        FROM user
+        WHERE id = #{id}
+    </select>
+    <select id="checkEmail" parameterType="String" resultType="Integer">
+        SELECT COUNT(*)
+        FROM user
+        WHERE email = #{email}
+    </select>
+    <!-- 로그인 -->
+    <select id="login" parameterType="User" resultType="String">
+        SELECT id
+        FROM user
+        WHERE id = #{id}
+          AND pw = ${pw}
+    </select>
+    <!-- 회원정보 찾기 -->
+    <select id="findAll" resultType="HashMap">
+        SELECT *
+        FROM user
+    </select>
+    <select id="findId" parameterType="User" resultType="String">
+        SELECT id
+        FROM user
+        WHERE name = #{name}
+          AND email = #{email}
+    </select>
+    <update id="updatePassword" parameterType="User">
+        UPDATE user
+        SET pw = #{pw}
+        WHERE id = #{id}
+          AND name = #{name}
+          AND email = #{email}
+    </update>
+    <!-- 회원탈퇴 -->
+    <update id="leave" parameterType="User">
+        UPDATE user
+        SET flag = 'D'
+        WHERE id = #{id}
+          AND deletedAt = CURRENT_TIMESTAMP
+    </update>
+</mapper>
