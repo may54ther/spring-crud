@@ -7,7 +7,7 @@
         FROM board
         WHERE flag = 'N'
     </select>
-    <select id="selectAll" parameterType="int, int" resultType="Board">
+    <select id="selectAll" resultType="Board">
         SELECT boardNo,
                writer,
                title,
@@ -36,7 +36,7 @@
           AND boardNo = #{param1}
         ORDER BY origin desc, boardNo desc
     </select>
-    <insert id="insert" parameterType="Board">
+    <insert id="insert" parameterType="Board" useGeneratedKeys="true" keyProperty="boardNo">
         INSERT INTO board (writer, title, content, origin, parent, depth, createdAt)
         VALUES (#{writer}, #{title}, #{content}, #{origin}, #{parent}, #{depth}, CURRENT_TIMESTAMP)
     </insert>
@@ -46,7 +46,7 @@
             content=#{content}
         WHERE boardNo = #{boardNo}
     </update>
-    <update id="delete" parameterType="long">
+    <update id="delete" parameterType="int">
         UPDATE board
         SET flag='Y'
         WHERE boardNo = #{param1}
