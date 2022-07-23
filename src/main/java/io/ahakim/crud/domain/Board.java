@@ -1,8 +1,8 @@
 package io.ahakim.crud.domain;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
@@ -10,7 +10,7 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 public class Board {
-    private Long seq;
+    private Long boardNo;
     private String writer;
     private String title;
     private String content;

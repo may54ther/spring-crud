@@ -2,4 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="io.ahakim.crud.mapper.BoardMapper">
+    <select id="total" resultType="int">
+        SELECT count(*)
+        FROM board
+        WHERE flag = 'N'
+    </select>
+    <select id="list" resultType="Board">
+        SELECT *
+        FROM board
+        WHERE flag = 'N'
+        LIMIT #{param1}, #{param2}
+    </select>
 </mapper>
