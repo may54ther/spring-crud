@@ -14,6 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/board")
 public class BoardController {
+
     private final BoardService boardService;
 
     @GetMapping("/list")
@@ -28,6 +29,6 @@ public class BoardController {
         log.info("current={}", current);
         log.info("amount={}", amount);
 
-        return boardService.list(current, amount);
+        return boardService.getPostList(current, amount);
     }
 }
