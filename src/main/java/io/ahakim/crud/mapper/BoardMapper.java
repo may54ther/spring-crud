@@ -7,7 +7,12 @@ import java.util.List;
 
 @Mapper
 public interface BoardMapper {
-    List<Board> list(Integer current, Integer amount);
 
+    int total();
+    List<Board> selectAll(Integer current, Integer amount);
+    Board select(int boardNo);
+    void insert(Board board);
+    void update(Board board);
+    void delete(int boardNo);
 }
 

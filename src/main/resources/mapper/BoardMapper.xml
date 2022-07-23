@@ -7,10 +7,48 @@
         FROM board
         WHERE flag = 'N'
     </select>
-    <select id="list" resultType="Board">
-        SELECT *
+    <select id="selectAll" parameterType="int, int" resultType="Board">
+        SELECT boardNo,
+               writer,
+               title,
+               views,
+               origin,
+               parent,
+               depth,
+               createdAt
         FROM board
         WHERE flag = 'N'
+        ORDER BY origin desc, boardNo desc
         LIMIT #{param1}, #{param2}
     </select>
+    <select id="select" parameterType="int" resultType="Board">
+        SELECT boardNo,
+               writer,
+               title,
+               content,
+               views,
+               origin,
+               parent,
+               depth,
+               createdAt
+        FROM board
+        WHERE flag = 'N'
+          AND boardNo = #{param1}
+        ORDER BY origin desc, boardNo desc
+    </select>
+    <insert id="insert" parameterType="Board">
+        INSERT INTO board (writer, title, content, origin, parent, depth, createdAt)
+        VALUES (#{writer}, #{title}, #{content}, #{origin}, #{parent}, #{depth}, CURRENT_TIMESTAMP)
+    </insert>
+    <update id="update" parameterType="Board">
+        UPDATE board
+        SET title=#{title},
+            content=#{content}
+        WHERE boardNo = #{boardNo}
+    </update>
+    <update id="delete" parameterType="long">
+        UPDATE board
+        SET flag='Y'
+        WHERE boardNo = #{param1}
+    </update>
 </mapper>
