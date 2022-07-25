@@ -17,12 +17,7 @@ public class BoardController {
 
     private final BoardService boardService;
 
-    @GetMapping("/list")
-    public String getList() {
-        return "redirect:/1";
-    }
-
-    @GetMapping("/list/{current}")
+    @GetMapping({"/list/", "/list/{current}"})
     @ResponseBody
     public List<Board> getList(@PathVariable(value = "current") Integer current,
                                @RequestParam(value = "amount", required = false, defaultValue = "10") Integer amount) {
