@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="30 seconds">
+    <!-- INCLUDE -->
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+
+    <!-- 변수 지정 -->
+    <property name="LOG_FILE" value="./logs/board.log"/>
+
+    <!-- Appender -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_FILE}</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_FILE}.%d{yyyy-MM-dd}</fileNamePattern>
+            <maxHistory>6</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Logger -->
+    <logger name="org.springframework.boot.autoconfigure.logging">
+        <level value="INFO"/>
+    </logger>
+    <logger name="io.ahakim.crud" additivity="false">   
+        <level value="info"/>
+        <appender-ref ref="FILE"/>       
+    </logger>
+
+    <!-- Root Logger -->
+    <root level="debug">
+        <appender-ref ref="CONSOLE"/>       
+    </root>
+</configuration>
+       
